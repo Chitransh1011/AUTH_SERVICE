@@ -41,7 +41,7 @@ class UserService {
             if(!response) {
                 throw {error: 'Invalid token'}
             }
-            const user = this.userRepository.getById(response.id);
+            const user = await this.userRepository.getById(response.id);
             if(!user) {
                 throw {error: 'No user with the corresponding token exists'};
             }
@@ -51,7 +51,7 @@ class UserService {
             throw error;
         }
     }
-    
+
     createToken(user) {
         try {
             const result = jwt.sign(user, JWT_KEY, {expiresIn: '1d'});
